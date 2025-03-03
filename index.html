@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak Card</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .card {
+            position: relative;
+            width: 320px;
+            height: 500px;
+            perspective: 1500px;
+            margin: 0 auto;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+        
+        .card.open .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .card-back {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo i {
+            font-size: 40px;
+            color: #3a7bd5;
+        }
+        
+        .crescent {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background-color: gold;
+            border-radius: 50%;
+            box-shadow: 10px 10px 0 0 white;
+            transform: rotate(-45deg);
+        }
+        
+        .status-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            min-width: 150px;
+        }
+        
+        .loading-dots {
+            display: inline-block;
+        }
+        
+        .loading-dots::after {
+            content: '.';
+            animation: dots 1.5s infinite;
+            font-size: 20px;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .tap-instruction {
+            position: absolute;
+            bottom: 15px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            animation: pulse 2s infinite;
+        }
+        
+        .back-tap-instruction {
+            font-size: 11px;
+            color: rgba(0, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+            margin-top: 5px;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: explode 1s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(10); opacity: 0; }
+        }
+        
+        .clock-display {
+            font-size: 14px;
+        }
+        
+        .arabic-text {
+            direction: rtl;
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            line-height: 1.5;
+            margin: 4px 0;
+            font-size: 16px; 
+        }
+        
+        .signature {
+            margin-top: 10px;
+            font-style: italic;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2f855a;
+        }
+        
+        .card-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .footer-content {
+            margin-top: 10px;
+        }
+        
+        .divider {
+            width: 60%;
+            height: 2px;
+            background-color: rgba(47, 133, 90, 0.2);
+            margin: 10px auto;
+        }
+        
+        .text-greeting {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2f855a;
+            margin-bottom: 10px;
+        }
+        
+        .text-intro {
+            font-size: 13px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #4a5568;
+        }
+        
+        .text-main {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2f855a;
+            margin-bottom: 8px;
+        }
+        
+        .text-secondary {
+            font-size: 13px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            color: #4a5568;
+        }
+        
+        .text-arabic-translation {
+            font-size: 12px;
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="stars"></div>
+                    <div class="logo">
+                        <a href="/">
+                            <img src="logo.png" alt="Logo" width="120" height="100">
+                          </a>
+                    </div>
+                    <h1 class="text-2xl font-bold mb-3">Happy Eid Mubarak ✨</h1>
+                    
+          
+                    <div class="status-container">
+                        <div>
+                            <span id="loading-text">Loading</span>
+                            <span class="loading-dots"></span>
+                        </div>
+                        <span id="jakarta-time" class="clock-display mt-1"></span>
+                    </div>
+                    
+                    <div class="tap-instruction">Tap card to open</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-content">
+                        <div class="main-content">
+                            <h2 class="text-greeting">Eid Mubarak!</h2>
+                            
+                            <p class="text-intro">Di penghujung bulan suci Ramadhan ini, dengan segala kerendahan hati dan ketulusan, kami sekeluarga mengucapkan:</p>
+                            
+                            <p class="text-main">Selamat Hari Raya Idul Fitri<br>1 Syawal 1446 H.</p>
+                            
+                            <div class="divider"></div>
+                            
+                            <p class="arabic-text mb-2 text-green-800">ﺗَﻘَﺒَّﻞَ ﺍﻟﻠّﻪُ ﻣِﻨَّﺎ ﻭَ ﻣِﻨْﻜُﻢْ ﺻِﻴَﻤَﻨَﺎ ﻭَ ﺻِﻴَﻤَﻜُﻢْ ﻛُﻞُّ ﻋَﺎﻡٍ ﻭَ ﺃَﻧْﺘُﻢْ ﺑِﺨَﻴْﺮ</p>
+                            
+                            <p class="text-arabic-translation">"Taqabalallahu minna wa minkum shiyamana wa siyamakum, kullu 'aamin wa antum bi khair"</p>
+                            
+                            <div class="divider"></div>
+                            
+                            <p class="text-main">Minal Aidin Wal Faizin</p>
+                            <p class="text-secondary">Mohon Maaf Lahir & Batin</p>
+                            <p class="text-secondary">Atas segala kesalahan dan kekhilafan</p>
+                            <p class="text-secondary">Semoga amal ibadah puasa kita diterima oleh Allah SWT</p>
+                            <p class="text-secondary">dan kita kembali suci seperti saat dilahirkan.</p>
+                            
+                            <p class="text-center arabic-text mt-2">آمــــــــــــــين</p>
+                            <p class="text-center arabic-text mb-1">وَالسَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُه</p>
+                            
+                            <p class="signature">~ Heni & Keluarga ~</p>
+                        </div>
+                        
+                        <div class="footer-content">
+                            <div class="status-container bg-green-100 mt-2">
+                                <p id="jakarta-time-back" class="text-xs text-green-800"></p>
+                            </div>
+                            <div class="back-tap-instruction">Tap card to close</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateJakartaTime() {
+            const now = moment().tz("Asia/Jakarta");
+            const timeString = now.format("HH:mm:ss");
+            const dateString = now.format("DD MMMM YYYY");
+            
+            document.getElementById("jakarta-time").textContent = `${timeString}`;
+            document.getElementById("jakarta-time-back").textContent = `${dateString} | ${timeString}`;
+        }
+        
+        function showLoading() {
+            document.getElementById("loading-text").textContent = "Loading";
+            
+            setTimeout(() => {
+                document.getElementById("loading-text").textContent = "Jakarta";
+                updateJakartaTime();
+                // Start regular updates
+                setInterval(updateJakartaTime, 1000);
+            }, 3000);
+        }
+        
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            const starCount = 30;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        function createFirework(x, y) {
+            const colors = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f'];
+            const fireworkCount = 8;
+            
+            for (let i = 0; i < fireworkCount; i++) {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                firework.style.top = `${y}px`;
+                firework.style.left = `${x}px`;
+                document.body.appendChild(firework);
+                
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000);
+            }
+        }
+        
+        document.querySelector('.card').addEventListener('click', function(e) {
+            this.classList.toggle('open');
+            createFirework(e.clientX, e.clientY);
+        });
+        
+        createStars();
+        showLoading();
+    </script>
+</body>
+</html>
