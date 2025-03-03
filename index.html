@@ -22,21 +22,31 @@
             align-items: center;
             min-height: 100vh;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            overflow: hidden; 
+            overflow: hidden;
         }
         
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            padding: 20px;
+        }
+
         .card {
             position: relative;
             width: 300px;
             height: 480px;
             perspective: 1500px;
             margin: auto;
-            transform: translateY(-5%);
             display: flex; 
             justify-content: center;
             align-items: center;
+            transform: translateY(-5%);
+            transition: transform 0.6s;
         }
-             
+        
         @media (max-width: 640px) {
             .card {
                 width: 280px;
@@ -51,21 +61,11 @@
                 height: 420px;
             }
         }
-        
+
         @media (max-height: 600px) {
             .card {
                 transform: translateY(0);
             }
-        }
-   
-        .container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden; 
         }
 
         .card-inner {
@@ -77,11 +77,11 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             border-radius: 15px;
         }
-        
+
         .card.open .card-inner {
             transform: rotateY(180deg);
         }
-        
+
         .card-front, .card-back {
             position: absolute;
             width: 100%;
@@ -90,7 +90,7 @@
             border-radius: 15px;
             overflow: hidden;
         }
-        
+
         .card-front {
             background: linear-gradient(135deg, #3a7bd5, #00d2ff);
             display: flex;
@@ -101,7 +101,7 @@
             padding: 20px;
             text-align: center;
         }
-        
+
         .card-back {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             transform: rotateY(180deg);
@@ -114,7 +114,7 @@
             color: #333;
             overflow-y: auto;
         }
-        
+
         .logo {
             width: 80px;
             height: 80px;
@@ -126,12 +126,12 @@
             margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .logo i {
             font-size: 40px;
             color: #3a7bd5;
         }
-        
+
         .crescent {
             position: relative;
             width: 60px;
@@ -141,7 +141,7 @@
             box-shadow: 10px 10px 0 0 white;
             transform: rotate(-45deg);
         }
-        
+
         .status-container {
             display: flex;
             flex-direction: column;
@@ -152,23 +152,23 @@
             border-radius: 20px;
             min-width: 150px;
         }
-        
+
         .loading-dots {
             display: inline-block;
         }
-        
+
         .loading-dots::after {
-            content: '.';
+            content: '.'; 
             animation: dots 1.5s infinite;
             font-size: 20px;
         }
-        
+
         @keyframes dots {
             0%, 20% { content: '.'; }
             40% { content: '..'; }
             60%, 100% { content: '...'; }
         }
-        
+
         .tap-instruction {
             position: absolute;
             bottom: 15px;
@@ -176,20 +176,20 @@
             color: rgba(255, 255, 255, 0.8);
             animation: pulse 2s infinite;
         }
-        
+
         .back-tap-instruction {
             font-size: 11px;
             color: rgba(0, 0, 0, 0.5);
             animation: pulse 2s infinite;
             margin-top: 5px;
         }
-        
+
         @keyframes pulse {
             0% { opacity: 0.6; }
             50% { opacity: 1; }
             100% { opacity: 0.6; }
         }
-        
+
         .stars {
             position: absolute;
             top: 0;
@@ -198,19 +198,19 @@
             height: 100%;
             pointer-events: none;
         }
-        
+
         .star {
             position: absolute;
             background-color: white;
             border-radius: 50%;
             animation: twinkle 1.5s infinite ease-in-out;
         }
-        
+
         @keyframes twinkle {
             0%, 100% { opacity: 0.3; transform: scale(0.8); }
             50% { opacity: 1; transform: scale(1); }
         }
-        
+
         .firework {
             position: absolute;
             width: 5px;
@@ -219,17 +219,17 @@
             animation: explode 1s forwards;
             opacity: 0;
         }
-        
+
         @keyframes explode {
             0% { transform: scale(0); opacity: 0; }
             50% { opacity: 1; }
             100% { transform: scale(10); opacity: 0; }
         }
-        
+
         .clock-display {
             font-size: 14px;
         }
-        
+
         .arabic-text {
             direction: rtl;
             font-family: 'Amiri', 'Traditional Arabic', serif;
@@ -237,7 +237,7 @@
             margin: 4px 0;
             font-size: 16px; 
         }
-        
+
         .signature {
             margin-top: 10px;
             font-style: italic;
@@ -246,7 +246,7 @@
             color: #2f855a;
             text-align: center;
         }
-        
+
         .card-content {
             width: 100%;
             height: 100%;
@@ -254,25 +254,25 @@
             flex-direction: column;
             justify-content: center;
         }
-        
+
         .main-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-        
+
         .footer-content {
             margin-top: 10px;
         }
-        
+
         .divider {
             width: 60%;
             height: 2px;
             background-color: rgba(47, 133, 90, 0.2);
             margin: 15px auto;
         }
-        
+
         .text-greeting {
             font-size: 38px;
             font-weight: bold;
@@ -280,7 +280,7 @@
             margin-bottom: 10px;
             text-align: center;
         }
-        
+
         .text-intro {
             font-size: 14px;
             margin-bottom: 12px;
@@ -288,7 +288,7 @@
             color: #4a5568;
             text-align: center;
         }
-        
+
         .text-main {
             font-size: 16px;
             font-weight: 600;
@@ -296,7 +296,7 @@
             margin-bottom: 10px;
             text-align: center;
         }
-        
+
         .text-secondary {
             font-size: 13px;
             margin-bottom: 8px;
@@ -304,7 +304,7 @@
             color: #4a5568;
             text-align: center;
         }
-        
+
         .text-arabic-translation {
             font-size: 12px;
             color: #4a5568;
@@ -313,7 +313,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
     <div class="container mx-auto px-4 py-8">
         <div class="card">
             <div class="card-inner">
@@ -326,7 +326,6 @@
                     </div>
                     <h1 class="text-2xl font-bold mb-3">Happy Eid Mubarak ✨</h1>
                     
-          
                     <div class="status-container">
                         <div>
                             <span id="loading-text">Loading</span>
@@ -340,19 +339,24 @@
                 <div class="card-back">
                     <div class="card-content">
                         <div class="main-content">
+                            <!-- Greeting Section -->
                             <h2 class="text-greeting">Eid Mubarak!</h2>
                             <p class="text-intro">Di penghujung bulan suci Ramadhan ini, dengan segala kerendahan hati dan ketulusan, kami sekeluarga mengucapkan:</p>
                 
+                            <!-- Main Eid message -->
                             <p class="text-main">Selamat Hari Raya Idul Fitri<br>1 Syawal 1446 H.</p>
                 
+                            <!-- Divider -->
                             <div class="divider"></div>
                 
+                            <!-- Arabic text -->
                             <p class="arabic-text mb-2 text-green-800">ﺗَﻘَﺒَّﻞَ ﺍﻟﻠّﻪُ ﻣِﻨَّﺎ ﻭَ ﻣِﻨْﻜُﻢْ ﺻِﻴَﻤَﻨَﺎ ﻭَ ﺻِﻴَﻤَﻜُﻢْ ﻛُﻞُّ ﻋَﺎﻡٍ ﻭَ ﺃَﻧْﺘُﻢْ ﺑِﺨَﻴْﺮ</p>
                             <p class="text-arabic-translation">"Taqabalallahu minna wa minkum shiyamana wa siyamakum, kullu 'aamin wa antum bi khair"</p>
                 
+                            <!-- Another divider -->
                             <div class="divider"></div>
-
-                            
+                
+                            <!-- Additional Eid message -->
                             <p class="text-main">Minal Aidin Wal Faizin</p>
                             <p class="text-secondary">Mohon Maaf Lahir & Batin</p>
                             <p class="text-secondary">Atas segala kesalahan dan kekhilafan</p>
@@ -373,6 +377,7 @@
                         </div>
                     </div>
                 </div>                            
+
             </div>
         </div>
     </div>
